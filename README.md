@@ -31,23 +31,25 @@ This project provides a Flask backend for downloading audio from YouTube, transc
 
 2. **Install dependencies:**
 
-   `pip install -U -r requirements.txt `
+   ```bash
+   pip install -U -r requirements.txt
+   ```
 
-3. **Set up environment variables:**
+4. **Set up environment variables:**
 
    1. Navigate to Your Project Directory
    2. Open the `.env` file with `nano`:
 
       `nano .env`
-4. **Edit the `.env` File:**
+5. **Edit the `.env` File:**
       ```
       OPENAI_API_KEY=your-openai-api-key
       ```
-5. **Save and Exit:**
+6. **Save and Exit:**
       - To save the changes, press Ctrl + O (write out), then press Enter.
       - To exit, press Ctrl + X.
 
-6. **`FFmpeg` Installation**
+7. **`FFmpeg` Installation**
 
 #### On Windows:
 
@@ -72,14 +74,20 @@ Extract the downloaded ZIP file to a directory, for example, C:\FFmpeg.
 
 You can install `ffmpeg` using Homebrew:
 
-`brew install ffmpeg`
+```bash
+brew install ffmpeg
+```
 
 #### On Linux:
 For Ubuntu and other Debian-based distributions, you can install ffmpeg from the apt repository:
 
-`sudo apt update`
+```bash
+sudo apt update
+```
 
-`sudo apt install ffmpeg`
+```bash
+sudo apt install ffmpeg
+```
 
 ## Running the app
 1. **Run the Flask app**: `python app.py`
@@ -87,8 +95,12 @@ For Ubuntu and other Debian-based distributions, you can install ffmpeg from the
 
 ## API Endpoints
 1. `/process_audio` (POST): Downloads, splits, transcribes, and generates notes from the audio of a given YouTube video URL.
-   - `curl -X POST -N http://127.0.0.1:5000/process_audio -H "Content-Type: application/json" -d '{"url": "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"}'`
+   - ```bash
+     curl -X POST -N http://127.0.0.1:5000/process_audio -H "Content-Type: application/json" -d '{"url": "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"}'
+     ```
 
  2. `/get_notes` (GET): Retrieves the generated notes.
-    - `curl http://127.0.0.1:5000/get_notes`
+    - ```bash
+      curl http://127.0.0.1:5000/get_notes
+      ```
 
