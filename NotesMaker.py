@@ -18,3 +18,4 @@ class NotesMaker:
         )
         notes = response.choices[0].message.content
         self.write_to_file(notes)
+        return notes

@@ -19,6 +19,48 @@ CORS(app)
 audio_processor = AudioProcessing()
 notes_maker = NotesMaker()
 
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+
+def generate_pdf(notes, output_filename="notes.pdf"):
+    # Create a PDF document with letter-sized pages
+    pdf = SimpleDocTemplate(output_filename, pagesize=letter)
+
+    # Define styles for the PDF
+    styles = getSampleStyleSheet()
+    normal_style = styles['Normal']
+    title_style = ParagraphStyle(
+        'Title',
+        fontSize=18,
+        leading=22,
+        spaceAfter=14,
+        alignment=1,  # Center alignment
+    )
+
+    # Content list to add paragraphs
+    content = []
+
+    # Add a title to the PDF
+    title = Paragraph("Generated Notes", title_style)
+    content.append(title)
+    content.append(Spacer(1, 12))  # Add some space after the title
+
+    # Split notes into paragraphs
+    paragraphs = notes.split('\n')
+    
+    # Add each paragraph to the PDF
+    for paragraph in paragraphs:
+        p = Paragraph(paragraph, normal_style)
+        content.append(p)
+        content.append(Spacer(1, 12))  # Add some space between paragraphs
+
+    # Build the PDF
+    pdf.build(content)
+
+    print(f"PDF generated successfully: {output_filename}")
+
 # SSE generator to stream status updates
 def stream_status(messages):
     for message in messages:
@@ -27,7 +69,8 @@ def stream_status(messages):
 
 @app.route('/process_audio', methods=['POST'])
 def process_audio():
-    os.remove("notes.txt")
+    if os.path.exists("notes.txt"):
+        os.remove("notes.txt")
     try:
         data = request.json
         url = data.get('url')
@@ -59,7 +102,7 @@ def process_audio():
         status_messages.append("Generating notes from transcription...")
         
         # Step 4: Generate notes from the transcribed text
-        notes = notes_maker.generate_notes(full_transcription)
+        notes_maker.generate_notes(full_transcription)
         shutil.rmtree("audios")
         status_messages.append("Notes generated successfully.")
 
