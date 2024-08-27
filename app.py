@@ -27,6 +27,7 @@ def stream_status(messages):
 
 @app.route('/process_audio', methods=['POST'])
 def process_audio():
+    os.remove("notes.txt")
     try:
         data = request.json
         url = data.get('url')
