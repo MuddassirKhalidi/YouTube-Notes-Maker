@@ -96,7 +96,7 @@ sudo apt install ffmpeg
 ## API Endpoints
 1. `/process_audio` (POST): Downloads, splits, transcribes, and generates notes from the audio of a given YouTube video URL.
    - ```bash
-     curl -X POST -N http://127.0.0.1:5000/process_audio -H "Content-Type: application/json" -d '{"url": "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"}'
+     curl -X POST -N http://127.0.0.1:5000/generate_notes -H "Content-Type: application/json" -d '{"url": "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"}'
      ```
 
  2. `/get_notes` (GET): Retrieves the generated notes.
